@@ -251,10 +251,6 @@ void fetch_data() {
 
 }
 
-void test() {
-    printf( "Raspberry Pi wiringPi DHT11 Temperature test program\n" );
-}
-
 int main( void )
 {
     // printf( "Raspberry Pi wiringPi DHT11 Temperature test program\n" );

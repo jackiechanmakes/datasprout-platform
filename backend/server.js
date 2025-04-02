@@ -10,7 +10,7 @@ app.get('/data', (req, res) => {
   const { startDate, endDate } = req.query;
 
   // Pass startDate and endDate to the C program
-  const command = `./sensor_data_program ${startDate} ${endDate}`;
+  const command = `.data/fetch_data ${startDate} ${endDate}`;
 
   exec(command, (error, stdout, stderr) => {
     if (error) {
