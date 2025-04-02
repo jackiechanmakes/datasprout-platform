@@ -3,12 +3,16 @@
 # Start backend (Node.js server)
 echo "Starting backend..."
 cd backend/
-node server.js
+# node server.js &
+pm2 start server.js --name "plant-proj-backend"
 
 sleep 5
 
 # Start frontend (React app)
 echo "Starting frontend..."
 cd ../frontend
-npm start
+# npm start &
+npm run build
+pm2 serve build --name "plant-proj-frontend" --port 3000
+
 
