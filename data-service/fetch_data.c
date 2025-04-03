@@ -228,19 +228,28 @@ void insert_db() {
 
 void fetch_data() {
     /* Send SQL select query */
-    if (mysql_query(conn, "select temperature, humidity, timestamp from sensor_data ORDER BY timestamp DESC LIMIT 1"))
+    // if (mysql_query(conn, "select temperature, humidity, timestamp from sensor_data ORDER BY timestamp DESC LIMIT 1"))
+    if (mysql_query(conn, "select temperature, humidity, timestamp from sensor_data ORDER BY timestamp"))    
     {
         fprintf(stderr, "%s\n", mysql_error(conn));
         exit(1);
     }
     res = mysql_store_result(conn);
 
-    row = mysql_fetch_row(res);
+    // row = mysql_fetch_row(res);
     
     if (res) {
-        printf("Temperature: %s\n", row[0]);
-        printf("Humidity: %s\n", row[1]);
-        printf("Timestamp: %s\n", row[2]);
+
+        while ((row = mysql_fetch_row(res)) != NULL) {
+            // printf("Temperature: %s\n", row[0]);
+            // printf("Humidity: %s\n", row[1]);
+            // printf("Timestamp: %s\n", row[2]);
+
+            printf("%s %s %s\n", row[0], row[1], row[2]);
+        }
+    } else {
+        fprintf(stderr, "No results found.\n");
+        exit(1);
     }
 
     /* SQL select query output */
@@ -251,16 +260,14 @@ void fetch_data() {
 
 }
 
-int main( void )
+int main( int argc, char *argv[] )
 {
     // printf( "Raspberry Pi wiringPi DHT11 Temperature test program\n" );
     if ( wiringPiSetup() == -1 )
         exit( 1 );
 
     connect_db();
-
     read_dht11_dat();
-    
     disconnect_db();
     return(0);
 }

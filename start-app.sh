@@ -4,9 +4,9 @@
 echo "Starting backend..."
 cd backend/
 # node server.js &
-pm2 start server.js --name "plant-proj-backend"
+pm2 start Server.js --name "plant-proj-backend"
 
-sleep 5
+sleep 2
 
 # Start frontend (React app)
 echo "Starting frontend..."
