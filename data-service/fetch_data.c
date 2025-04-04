@@ -180,12 +180,14 @@ void read_dht11_dat()
         // Print to console
         // printf( "Humidity = %d.%d %% Temperature = %d.%d C (%.1f F) Time = %s\n",
         //         dht11_dat[0], dht11_dat[1], dht11_dat[2], dht11_dat[3], f, time_data);
-        fetch_data();
     }
     else
     {
         printf( "Data not good, skip\n" );
     }
+
+    fetch_data();
+
 }
 
 MYSQL *conn;
@@ -236,16 +238,16 @@ void fetch_data() {
     }
     res = mysql_store_result(conn);
 
-    // row = mysql_fetch_row(res);
+    row = mysql_fetch_row(res);
     
     if (res) {
 
         while ((row = mysql_fetch_row(res)) != NULL) {
-            // printf("Temperature: %s\n", row[0]);
-            // printf("Humidity: %s\n", row[1]);
-            // printf("Timestamp: %s\n", row[2]);
+            printf("Temperature: %s\n", row[0]);
+            printf("Humidity: %s\n", row[1]);
+            printf("Timestamp: %s\n", row[2]);
 
-            printf("%s %s %s\n", row[0], row[1], row[2]);
+            // printf("%s %s %s\n", row[0], row[1], row[2]);
         }
     } else {
         fprintf(stderr, "No results found.\n");

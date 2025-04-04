@@ -1,8 +1,10 @@
 const express = require('express');
+const cors = require('cors');
 const { exec } = require('child_process');
 const app = express();
 const port = 8080;
 
+app.use(cors());
 app.use(express.json());
 
 // API endpoint to fetch data
@@ -34,27 +36,47 @@ app.use(express.json());
 // });
 
 app.get('/data', (req, res) => {
-  // console.log('Request query parameters:', req.query);
+  console.log('Request query parameters:', req.query);
   const { startDate, endDate } = req.query;
-  const command = `.data-service/fetch_data ${startDate} ${endDate}`;
+  const command = `../data-service/fetch_data ${startDate} ${endDate}`;
+  // const command = `../data-service/fetch_data`;
 
   exec(command, (error, stdout, stderr) => {
+    // console.log(stdout);
   const output = stdout.split("\n");
+  const data = [];
+  // console.log(output);
 
-  if (output[0] === "Data not good, skip") {    
-      console.log("Skipping invalid data");
-  } else {
-    console.log(output[0])
-      // const data = {
-      //     temperature: parseFloat(output[0].split(":")[1].trim()),
-      //     humidity: parseFloat(output[1].split(":")[1].trim()),
-      //     timestamp: output[2].split(":")[1].trim()
-      // };
-      
-      // res.json(data);
+  for (let i = 0; i < output.length - 2; i++) {
+    if (output[i].includes("Temperature") && output[i + 1].includes("Humidity") && output[i + 2].includes("Timestamp")) {
+      const temperature = parseFloat(output[i].split(":")[1].trim());
+      const humidity = parseFloat(output[i+1].split(":")[1].trim());
+      const timestamp = output[i+2].split(":")[1].trim();
+
+      data.push( {
+        temperature, 
+        humidity, 
+        timestamp
+      });
+  
+      i += 2;
+    } 
   }
 
-  }) 
+  // data.push( {
+  //   temperature:1, 
+  //   humidity:2, 
+  //   timestamp:3
+  // });
+
+  // data.push( {
+  //   temperature:5, 
+  //   humidity:7, 
+  //   timestamp:9
+  // });
+
+  res.json(data); 
+  });
 });
 
 app.listen(port, () => {
