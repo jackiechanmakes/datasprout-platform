@@ -39,14 +39,10 @@ app.get('/data', (req, res) => {
   console.log('Request query parameters:', req.query);
   const { startDate, endDate } = req.query;
   const command = `../data-service/fetch_data ${startDate} ${endDate}`;
-  // const command = `../data-service/fetch_data`;
 
   exec(command, (error, stdout, stderr) => {
-    // console.log(stdout);
   const output = stdout.split("\n");
   const data = [];
-  // console.log(output);
-
   for (let i = 0; i < output.length - 2; i++) {
     if (output[i].includes("Temperature") && output[i + 1].includes("Humidity") && output[i + 2].includes("Timestamp")) {
       const temperature = parseFloat(output[i].split(":")[1].trim());
@@ -62,18 +58,6 @@ app.get('/data', (req, res) => {
       i += 2;
     } 
   }
-
-  // data.push( {
-  //   temperature:1, 
-  //   humidity:2, 
-  //   timestamp:3
-  // });
-
-  // data.push( {
-  //   temperature:5, 
-  //   humidity:7, 
-  //   timestamp:9
-  // });
 
   res.json(data); 
   });
