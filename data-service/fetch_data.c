@@ -259,7 +259,6 @@ void fetch_data(char* startDate, char *endDate) {
 }
 
 int main( int argc, char *argv[] )
-
 {
     char *startDate = argv[1];
     char *endDate = argv[2];

@@ -11,7 +11,10 @@ function App() {
     if (startDate && endDate) {
       fetch(`http://localhost:8080/data?startDate=${startDate}&endDate=${endDate}`)
         .then(response => response.json())
-        .then(data => setData(data))
+        .then(data => {
+          console.log(data)
+          setData(data)
+        })
         .catch(error => console.error('Error fetching data:', error))
     }
   }, [startDate, endDate]);
@@ -20,7 +23,10 @@ function App() {
     <div>
       <h1>Sensor Data</h1>
       <DateRangeSelector setStartDate={setStartDate} setEndDate={setEndDate} />
-      <D3Chart data={data} />
+      <h2>Temperature</h2>
+      <D3Chart key={`temperature-${startDate}-${endDate}`} data={data} type="temperature" />
+      <h2>Humidity</h2>
+      <D3Chart key={`humidity-${startDate}-${endDate}`} data={data} type="humidity" />
     </div>
   );
 }
