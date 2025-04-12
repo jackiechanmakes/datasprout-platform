@@ -29,7 +29,6 @@ function D3Chart({ data }) {
     const parseTime = d3.utcParse("%Y-%m-%d %H:%M:%S");
     data.forEach(d => {
       d.time = parseTime(d.time);
-      // d.time = +d.time;
       d.temperature = +d.temperature;
       d.humidity = +d.humidity;
     });

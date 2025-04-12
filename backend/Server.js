@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { exec } = require('child_process');
+const { start } = require('repl');
 const app = express();
 const port = 8080;
 
@@ -34,6 +35,8 @@ app.use(express.json());
 app.get('/data', (req, res) => {
   console.log('Request query parameters:', req.query);
   const { startDate, endDate } = req.query;
+  console.log(startDate);
+  console.log(endDate);
   const command = `../data-service/fetch_data ${startDate} ${endDate}`;
 
   exec(command, (error, stdout, stderr) => {
@@ -43,9 +46,7 @@ app.get('/data', (req, res) => {
     if (output[i].includes("Temperature") && output[i + 1].includes("Humidity") && output[i + 2].includes("Timestamp")) {
       const temperature = parseFloat(output[i].split(":")[1].trim());
       const humidity = parseFloat(output[i+1].split(":")[1].trim());
-      // const timestamp = output[i+2].split(":")[1].trim();
       const time = output[i+2].substring(11); 
-      // const time = parseFloat(output[i+1].split(":")[1].trim());
 
       data.push( {
         temperature, 

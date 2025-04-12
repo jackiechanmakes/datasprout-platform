@@ -13,7 +13,7 @@
 #define DHTPIN 7
 
 void insert_db();
-void fetch_data();
+void fetch_data(char *startDate, char *endDate);
 
 // LCD information
 int LCDAddr = 0x27;
@@ -113,7 +113,7 @@ void writeLCD(char* data){
 // Humdifier 
 int dht11_dat[5] = { 0, 0, 0, 0, 0 };
 
-void read_dht11_dat()
+void read_dht11_dat(char *startDate, char *endDate)
 {
     uint8_t laststate = HIGH;
     uint8_t counter = 0;
@@ -186,7 +186,7 @@ void read_dht11_dat()
         printf( "Data not good, skip\n" );
     }
 
-    fetch_data();
+    fetch_data(startDate, endDate);
 
 }
 
@@ -228,48 +228,45 @@ void insert_db() {
     res = mysql_use_result(conn);
 }
 
-void fetch_data() {
+void fetch_data(char* startDate, char *endDate) {
     /* Send SQL select query */
-    // if (mysql_query(conn, "select temperature, humidity, timestamp from sensor_data ORDER BY timestamp DESC LIMIT 1"))
-    if (mysql_query(conn, "select temperature, humidity, timestamp from sensor_data ORDER BY timestamp"))    
+
+    char queryStr[150] = "select temperature, humidity, timestamp from sensor_data WHERE `timestamp` BETWEEN '";
+    strcat(queryStr, startDate);
+    strcat(queryStr, " 00:00' AND '");
+    strcat(queryStr, endDate);
+    strcat(queryStr, " 23:59' ORDER BY timestamp");
+
+    if (mysql_query(conn, queryStr))    
     {
         fprintf(stderr, "%s\n", mysql_error(conn));
         exit(1);
     }
+
     res = mysql_store_result(conn);
-
     row = mysql_fetch_row(res);
-    
-    if (res) {
 
+    if (res) {
         while ((row = mysql_fetch_row(res)) != NULL) {
             printf("Temperature: %s\n", row[0]);
             printf("Humidity: %s\n", row[1]);
             printf("Timestamp: %s\n", row[2]);
-
-            // printf("%s %s %s\n", row[0], row[1], row[2]);
         }
     } else {
         fprintf(stderr, "No results found.\n");
         exit(1);
     }
-
-    /* SQL select query output */
-    // printf("\n\nData in sensor_data\n");
-    // printf("\nID\tHUMIDITY\tTEMP\tTIMESTAMP\n");
-    // while ((row = mysql_fetch_row(res)) != NULL)
-    //     printf("%s\t%s\t%s\t%s\n", row[0], row[1], row[2], row[3]);
-
 }
 
 int main( int argc, char *argv[] )
+
 {
-    // printf( "Raspberry Pi wiringPi DHT11 Temperature test program\n" );
+    char *startDate = argv[1];
+    char *endDate = argv[2];
     if ( wiringPiSetup() == -1 )
         exit( 1 );
-
     connect_db();
-    read_dht11_dat();
+    read_dht11_dat(startDate, endDate);
     disconnect_db();
     return(0);
 }
