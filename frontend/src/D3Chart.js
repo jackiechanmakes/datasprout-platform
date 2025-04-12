@@ -26,10 +26,10 @@ function D3Chart({ data }) {
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     // Parse date format
-    const parseTime = d3.utcParse("%Y-%m-%dT%H:%M:%SZ");
+    const parseTime = d3.utcParse("%Y-%m-%d %H:%M:%S");
     data.forEach(d => {
-      // d.time = parseTime(d.time);
-      d.time = +d.time;
+      d.time = parseTime(d.time);
+      // d.time = +d.time;
       d.temperature = +d.temperature;
       d.humidity = +d.humidity;
     });

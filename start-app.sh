@@ -12,7 +12,7 @@ sleep 2
 echo "Starting frontend..."
 cd ../frontend
 # npm start &
-npm run build
+npm run build 
 pm2 serve build --name "plant-proj-frontend" --port 3000
 
 
