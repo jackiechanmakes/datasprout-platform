@@ -36,3 +36,37 @@
     transform: rotate(360deg);
   }
 }
+
+.line {
+  stroke-width: 2.5;
+  fill: none;
+}
+
+.axis path,
+.axis line {
+  stroke: #ccc;
+}
+
+.axis text {
+  font-size: 12px;
+  fill: #555;
+}
+
+.chart-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.tooltip {
+  position: absolute;
+  background: white;
+  border: 1px solid #ddd;
+  padding: 6px 10px;
+  font-size: 12px;
+  pointer-events: none;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
