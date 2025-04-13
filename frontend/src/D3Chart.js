@@ -73,7 +73,18 @@ function D3Chart({ data, type }) {
       .attr("class", "line")
       .attr("d", line)
       .attr("stroke", type === "temperature" ? "red" : "blue")
-      .attr("fill", "none");
+      .attr("fill", "none")
+      .attr("stroke-dasharray", function() {
+        const totalLength = this.getTotalLength();
+        return `${totalLength} ${totalLength}`;
+      })
+      .attr("stroke-dashoffset", function() {
+        return this.getTotalLength();
+      })
+      .transition()
+      .duration(1000)
+      .ease(d3.easeCubic)
+      .attr("stroke-dashoffset", 0);
 
     const tooltip = d3.select("body").append("div")
     .attr("class", "tooltip")
