@@ -37,7 +37,6 @@ function D3Chart({ data, type }) {
       humidity: +d.humidity
     }));
     
-
     // Set x and y scales
     const x = d3.scaleTime()
       .domain(d3.extent(chartData, d => d.time))
@@ -75,9 +74,56 @@ function D3Chart({ data, type }) {
       .attr("d", line)
       .attr("stroke", type === "temperature" ? "red" : "blue")
       .attr("fill", "none");
-  };
 
-  return <div id = {`chart-${type}`}></div>;
+    const tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+    
+    // Add hover interactive data readings
+    svg.selectAll("dot")
+      .data(chartData)
+      .enter()
+      .append("circle")
+      .attr("cx", d => x(d.time))
+      .attr("cy", d => y(d[type]))
+      .attr("r", 4)
+      .attr("fill", type === "temperature" ? "red" : "blue")
+      .on("mouseover", (event, d) => {
+        tooltip.transition().duration(200).style("opacity", .9);
+        tooltip.html(`${d3.utcFormat("%Y-%m-%d %H:%M")(d.time)}<br/>${type}: ${d[type]}`)
+          .style("left", (event.pageX + 10) + "px")
+          .style("top", (event.pageY - 28) + "px");
+      })
+      .on("mouseout", () => {
+        tooltip.transition().duration(500).style("opacity", 0);
+      });    
+
+    // Add linear gradient under the curve
+    svg.append("linearGradient")
+    .attr("id", `gradient-${type}`)
+    .attr("gradientUnits", "userSpaceOnUse")
+    .attr("x1", 0).attr("y1", y.range()[0])
+    .attr("x2", 0).attr("y2", y.range()[1])
+    .selectAll("stop")
+    .data([
+      { offset: "0%", color: type === "temperature" ? "red" : "blue", opacity: 0.1 },
+      { offset: "100%", color: type === "temperature" ? "red" : "blue", opacity: 0 }
+    ])
+    .enter().append("stop")
+    .attr("offset", d => d.offset)
+    .attr("stop-color", d => d.color)
+    .attr("stop-opacity", d => d.opacity);
+
+    svg.append("path")
+      .datum(chartData)
+      .attr("fill", `url(#gradient-${type})`)
+      .attr("d", d3.area()
+        .x(d => x(d.time))
+        .y0(y.range()[0])
+        .y1(d => y(d[type]))
+    );
+    };
+   return <div id = {`chart-${type}`}></div>;
 }
 
 export default D3Chart;
