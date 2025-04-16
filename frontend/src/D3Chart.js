@@ -10,8 +10,8 @@ function D3Chart({ data, type }) {
   }, [data, type]);
 
   const multilineTickFormat = (date) => {
-    const formatDate = d3.timeFormat("%b %d");
-    const formatTime = d3.timeFormat("%H:%M");
+    const formatDate = d3.utcFormat("%b %d");
+    const formatTime = d3.utcFormat("%H:%M");
 
     return `${formatDate(date)}|${formatTime(date)}`;
   }
@@ -88,7 +88,8 @@ function D3Chart({ data, type }) {
     // Create line
     const line = d3.line()
       .x(d => x(d.time))
-      .y(d => y(d[type]));
+      .y(d => y(d[type]))
+      .curve(d3.curveLinear);
 
     // Add line
     svg.append("path")
