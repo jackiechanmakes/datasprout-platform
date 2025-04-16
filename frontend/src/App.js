@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import DateRangeSelector from './DateRangeSelector';
 import D3Chart from './D3Chart';
+import './DarkTheme.css'
+import './App.css'
 
 function App() {
   const [data, setData] = useState([]);
@@ -20,13 +22,18 @@ function App() {
   }, [startDate, endDate]);
 
   return (
-    <div>
+    <div className="dashboard">
       <h1>Sensor Data</h1>
       <DateRangeSelector setStartDate={setStartDate} setEndDate={setEndDate} />
-      <h2>Temperature</h2>
-      <D3Chart key={`temperature-${startDate}-${endDate}`} data={data} type="temperature" />
-      <h2>Humidity</h2>
-      <D3Chart key={`humidity-${startDate}-${endDate}`} data={data} type="humidity" />
+      {data.length > 0 && (
+        <>
+        <h2>Temperature</h2>
+        <D3Chart key={`temperature-${startDate}-${endDate}`} data={data} type="temperature" />
+        <h2>Humidity</h2>
+        <D3Chart key={`humidity-${startDate}-${endDate}`} data={data} type="humidity" />
+        </>
+      )}
+      
     </div>
   );
 }

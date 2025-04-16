@@ -9,6 +9,13 @@ function D3Chart({ data, type }) {
     }
   }, [data, type]);
 
+  const multilineTickFormat = (date) => {
+    const formatDate = d3.timeFormat("%b %d");
+    const formatTime = d3.timeFormat("%H:%M");
+
+    return `${formatDate(date)}|${formatTime(date)}`;
+  }
+
   const drawChart = (data, type) => {
     // Set chart dimensions
     const margin = { top: 20, right: 30, bottom: 40, left: 40 };
@@ -18,7 +25,7 @@ function D3Chart({ data, type }) {
     const chartId = `chart-${type}`;
 
     // Clear previous chart
-    d3.select(`#${chartId}`).selectAll("*").html("");
+    d3.select(`#${chartId}`).selectAll("*").remove();
 
     // Append SVG element
     const svg = d3.select(`#${chartId}`)
@@ -47,20 +54,36 @@ function D3Chart({ data, type }) {
       .range([height, 0]);
 
     // Add X axis
+    const xAxis = d3.axisBottom(x).tickFormat(multilineTickFormat);
     svg.append("g")
+      .attr("class", "x-axis")
       .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
+      .call(xAxis)
+      .selectAll("text")
+      .attr("fill", "#f5f5f5");
+
+      svg.selectAll(".x-axis .tick text")
+      .each(function () {
+        const self = d3.select(this);
+        const [date, time] = self.text().split("|");
+    
+        self.text(null)  // Clear original text
+    
+        self.append("tspan")
+          .attr("x", 0)
+          .attr("dy", "1.2em")
+          .text(date);
+    
+        self.append("tspan")
+          .attr("x", 0)
+          .attr("dy", "1.5em")  // Vertical spacing for second line
+          .text(time);
+      });
 
     // Add Y axis
     svg.append("g")
-      .call(d3.axisLeft(y))
-      .append("text")
-      .attr("y", -10)
-      .attr("x", -40)
-      .attr("dy", "0.75em")
-      .attr("text-anchor", "middle")
-      .attr("fill", "black")
-      .text(type === "temperature" ? "Temperature (deg. C)" : "Humidity (%)");
+      .attr("class", "y-axis")
+      .call(type === "temperature" ? d3.axisLeft(y).tickFormat(d => `${d}\u00B0C`) : d3.axisLeft(y).tickFormat(d => `${d}%`));
 
     // Create line
     const line = d3.line()
@@ -72,7 +95,7 @@ function D3Chart({ data, type }) {
       .datum(chartData)
       .attr("class", "line")
       .attr("d", line)
-      .attr("stroke", type === "temperature" ? "red" : "blue")
+      .attr("stroke", type === "temperature" ? "#ff7043" : "#4fc3f7")
       .attr("fill", "none")
       .attr("stroke-dasharray", function() {
         const totalLength = this.getTotalLength();
@@ -86,10 +109,13 @@ function D3Chart({ data, type }) {
       .ease(d3.easeCubic)
       .attr("stroke-dashoffset", 0);
 
-    const tooltip = d3.select("body").append("div")
-    .attr("class", "tooltip")
-    .style("opacity", 0);
-    
+    let tooltip = d3.select(".tooltip");
+    if (tooltip.empty()) {
+        tooltip = d3.select("body").append("div")
+          .attr("class", "tooltip")
+          .style("opacity", 0);
+      }
+      
     // Add hover interactive data readings
     svg.selectAll("dot")
       .data(chartData)
@@ -133,6 +159,19 @@ function D3Chart({ data, type }) {
         .y0(y.range()[0])
         .y1(d => y(d[type]))
     );
+
+    svg.selectAll("path.domain, .tick line")
+    .attr("stroke", "#888");
+
+    const yGrid = d3.axisLeft(y)
+    .tickSize(-width)
+    .tickFormat("")
+    .ticks(6);
+
+    svg.append("g")
+    .attr("class", "grid")
+    .call(yGrid);
+
     };
    return <div id = {`chart-${type}`}></div>;
 }
