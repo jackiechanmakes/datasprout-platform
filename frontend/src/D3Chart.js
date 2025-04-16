@@ -18,7 +18,7 @@ function D3Chart({ data, type }) {
 
   const drawChart = (data, type) => {
     // Set chart dimensions
-    const margin = { top: 20, right: 30, bottom: 40, left: 40 };
+    const margin = { top: 20, right: 30, bottom: 60, left: 40 };
     const width = 800 - margin.left - margin.right;
     const height = 400 - margin.top - margin.bottom;
 
@@ -127,7 +127,7 @@ function D3Chart({ data, type }) {
       .attr("fill", type === "temperature" ? "red" : "blue")
       .on("mouseover", (event, d) => {
         tooltip.transition().duration(200).style("opacity", .9);
-        tooltip.html(`${d3.utcFormat("%Y-%m-%d %H:%M")(d.time)}<br/>${type}: ${d[type]}`)
+        tooltip.html(`${d3.utcFormat("%m-%d-%Y, %H:%M")(d.time)}<br/>${type}: ${d[type]}${type === "temperature" ? "\u00B0C" : "%"}`)
           .style("left", (event.pageX + 10) + "px")
           .style("top", (event.pageY - 28) + "px");
       })
