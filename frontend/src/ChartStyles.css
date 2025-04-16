@@ -1,11 +1,11 @@
-#chart-temperature {
+#chart-temperature, #chart-humidity {
   background-color: #1e1e1e;
   border-radius: 30px;
-
+  padding: 20px;
 }
 
 .line {
-    stroke-width: 6;
+    stroke-width: 5;
     fill: none;
   }
   
@@ -43,3 +43,8 @@
     fill: #f5f5f5;
   }
   
+  .grid .tick line {
+    stroke: #ccc;
+    stroke-width: 3;
+    stroke-dasharray: 10, 10;
+  }

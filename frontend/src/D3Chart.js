@@ -170,7 +170,11 @@ function D3Chart({ data, type }) {
 
     svg.append("g")
     .attr("class", "grid")
-    .call(yGrid);
+    .call(yGrid)
+    .selectAll("line")
+    .attr("stroke", null)
+    .attr("stroke-width", null)
+    .attr("stroke-dasharray", null);
 
     };
    return <div id = {`chart-${type}`}></div>;
