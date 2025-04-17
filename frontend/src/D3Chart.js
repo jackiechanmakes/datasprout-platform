@@ -96,7 +96,7 @@ function D3Chart({ data, type }) {
       .datum(chartData)
       .attr("class", "line")
       .attr("d", line)
-      .attr("stroke", type === "temperature" ? "#ff7043" : "#4fc3f7")
+      .attr("stroke", type === "temperature" ? "red" : "blue")
       .attr("fill", "none")
       .attr("stroke-dasharray", function() {
         const totalLength = this.getTotalLength();
