@@ -1,12 +1,31 @@
 const express = require('express');
 const cors = require('cors');
 const { exec } = require('child_process');
+const db = require('./Database');
 const { start } = require('repl');
 const app = express();
 const port = 8080;
 
 app.use(cors());
 app.use(express.json());
+
+app.get('/api/stats', async (req, res) => {
+  try {
+    const { start, end } = req.query;
+    const conn = await db.getConnection();
+    const result = await conn.query(`
+      SELECT 
+      MIN(temperature) AS min,
+      MAX(temperature) AS max,
+      AVG(temperature) AS avg
+      FROM sensor_data  WHERE timestamp BETWEEN ? AND ?`, [start, end]);
+    conn.release();
+    res.json(result[0]);
+  } catch (err) {
+    console.log('DB error:', err);
+    res.status(500).json({ error: 'Database error' });
+  }
+});
 
 app.get('/data', (req, res) => {
   console.log('Request query parameters:', req.query);

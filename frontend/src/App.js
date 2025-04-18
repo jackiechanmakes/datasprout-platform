@@ -6,6 +6,7 @@ import './App.css'
 
 function App() {
   const [data, setData] = useState([]);
+  const [stats_data, setStatsData] = useState([]);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
@@ -21,6 +22,18 @@ function App() {
     }
   }, [startDate, endDate]);
 
+  useEffect(() => {
+    if (startDate && endDate) {
+      fetch(`http://localhost:8080/api/stats?start=${startDate}&end=${endDate}`)
+        .then(response => response.json())
+        .then(stats_data => {
+          console.log(stats_data)
+          setStatsData(stats_data)
+        })
+        .catch(error => console.error('Error fetching data:', error))
+    }
+  }, [startDate, endDate]);
+
   return (
     <div className="dashboard">
       <h1>Sensor Data</h1>
@@ -29,6 +42,10 @@ function App() {
         <>
         <h2>Temperature</h2>
         <D3Chart key={`temperature-${startDate}-${endDate}`} data={data} type="temperature" />
+        <p>Min: {stats_data.min}</p>
+        <p>Max: {stats_data.max}</p>
+        <p>Avg: {stats_data.avg}</p>
+
         <h2>Humidity</h2>
         <D3Chart key={`humidity-${startDate}-${endDate}`} data={data} type="humidity" />
         </>
