@@ -8,21 +8,4 @@ const pool = db.createPool({
     connectionLimit: 5
 });
 
-// async function asyncFunction() {
-//     let conn;
-//     try {
-//       conn = await pool.getConnection();
-//       const rows = await conn.query("SELECT COUNT(*) FROM sensor_data");
-//       console.log(rows); //[ {val: 1}, meta: ... ]
-  
-//     } catch (err) {
-//       throw err;
-//     } finally {
-//       if (conn) conn.release();
-//     }
-//   }
-//   asyncFunction().then(() => {
-//     pool.end();
-//   });
-
 module.exports = pool;

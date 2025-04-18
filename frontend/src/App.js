@@ -24,7 +24,7 @@ function App() {
 
   useEffect(() => {
     if (startDate && endDate) {
-      fetch(`http://localhost:8080/api/stats?start=${startDate}&end=${endDate}`)
+      fetch(`http://localhost:8080/api/stats?startDate=${startDate}&endDate=${endDate}`)
         .then(response => response.json())
         .then(stats_data => {
           console.log(stats_data)
@@ -42,12 +42,15 @@ function App() {
         <>
         <h2>Temperature</h2>
         <D3Chart key={`temperature-${startDate}-${endDate}`} data={data} type="temperature" />
-        <p>Min: {stats_data.min}</p>
-        <p>Max: {stats_data.max}</p>
-        <p>Avg: {stats_data.avg}</p>
+        <p>Min: {stats_data.temp_min}</p>
+        <p>Max: {stats_data.temp_max}</p>
+        <p>Avg: {stats_data.temp_avg}</p>
 
         <h2>Humidity</h2>
         <D3Chart key={`humidity-${startDate}-${endDate}`} data={data} type="humidity" />
+        <p>Min: {stats_data.hum_min}</p>
+        <p>Max: {stats_data.hum_max}</p>
+        <p>Avg: {stats_data.hum_avg}</p>
         </>
       )}
       
