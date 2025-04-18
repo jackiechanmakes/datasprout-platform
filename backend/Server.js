@@ -12,6 +12,8 @@ app.use(express.json());
 app.get('/api/stats', async (req, res) => {
   try {
     const { startDate, endDate } = req.query;
+    const startDateTime = `${startDate} 00:00:00`;
+    const endDateTime = `${startDate} 23:59:59`;
     const conn = await db.getConnection();
     const result = await conn.query(`
       SELECT 
@@ -21,7 +23,7 @@ app.get('/api/stats', async (req, res) => {
       MIN(humidity) AS hum_min,
       MAX(humidity) AS hum_max,
       ROUND(AVG(humidity), 1) AS hum_avg
-      FROM sensor_data WHERE timestamp BETWEEN ? AND ?`, [startDate, endDate]);
+      FROM sensor_data WHERE timestamp BETWEEN ? AND ?`, [startDateTime, endDateTime]);
     conn.release();
     res.json(result[0]);
   } catch (err) {
@@ -30,7 +32,7 @@ app.get('/api/stats', async (req, res) => {
   }
 });
 
-app.get('/data', (req, res) => {
+app.get('/api/data', (req, res) => {
   console.log('Request query parameters:', req.query);
   const { startDate, endDate } = req.query;
   console.log(startDate);

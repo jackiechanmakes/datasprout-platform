@@ -35,11 +35,11 @@ void disconnect_db() {
 void fetch_data(char* startDate, char *endDate) {
     /* Send SQL select query */
 
-    char queryStr[150] = "select temperature, humidity, timestamp from sensor_data WHERE `timestamp` BETWEEN '";
+    char queryStr[200] = "select temperature, humidity, timestamp from sensor_data WHERE `timestamp` BETWEEN '";
     strcat(queryStr, startDate);
-    strcat(queryStr, " 00:00' AND '");
+    strcat(queryStr, " 00:00:00' AND '");
     strcat(queryStr, endDate);
-    strcat(queryStr, " 23:59' ORDER BY timestamp");
+    strcat(queryStr, " 23:59:59' ORDER BY timestamp");
 
     if (mysql_query(conn, queryStr))    
     {
