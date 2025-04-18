@@ -41,16 +41,26 @@ function App() {
       {data.length > 0 && (
         <>
         <h2>Temperature</h2>
-        <D3Chart key={`temperature-${startDate}-${endDate}`} data={data} type="temperature" />
-        <p>Min: {stats_data.temp_min}&deg;C</p>
-        <p>Max: {stats_data.temp_max}&deg;C</p>
-        <p>Avg: {stats_data.temp_avg}&deg;C</p>
+        <D3Chart 
+          key={`temperature-${startDate}-${endDate}`} 
+          data={data} 
+          type="temperature" 
+          stats = {{ min: stats_data.temp_min,
+                     max: stats_data.temp_max,
+                     avg: stats_data.temp_avg
+          }} 
+        />
 
         <h2>Humidity</h2>
-        <D3Chart key={`humidity-${startDate}-${endDate}`} data={data} type="humidity" />
-        <p>Min: {stats_data.hum_min}%</p>
-        <p>Max: {stats_data.hum_max}%</p>
-        <p>Avg: {stats_data.hum_avg}%</p>
+        <D3Chart 
+          key={`humidity-${startDate}-${endDate}`} 
+          data={data} 
+          type="humidity" 
+          stats = {{ min: stats_data.temp_min,
+            max: stats_data.temp_max,
+            avg: stats_data.temp_avg
+          }} 
+        />
         </>
       )}
       

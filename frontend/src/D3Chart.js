@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import * as d3 from 'd3';
 import './ChartStyles.css';
 
-function D3Chart({ data, type }) {
+function D3Chart({ data, type, stats }) {
   useEffect(() => {
     if (data.length > 0) {
-      drawChart(data, type);
+      drawChart(data, type, stats);
     }
-  }, [data, type]);
+  }, [data, type, stats]);
 
   const multilineTickFormat = (date) => {
     const formatDate = d3.utcFormat("%b %d");
@@ -16,12 +16,11 @@ function D3Chart({ data, type }) {
     return `${formatDate(date)}|${formatTime(date)}`;
   }
 
-  const drawChart = (data, type) => {
+  const drawChart = (data, type, stats) => {
     // Set chart dimensions
-    const margin = { top: 20, right: 30, bottom: 60, left: 40 };
+    const margin = { top: 50, right: 30, bottom: 60, left: 40 };
     const width = 800 - margin.left - margin.right;
     const height = 400 - margin.top - margin.bottom;
-
     const chartId = `chart-${type}`;
 
     // Clear previous chart
@@ -84,6 +83,19 @@ function D3Chart({ data, type }) {
     svg.append("g")
       .attr("class", "y-axis")
       .call(type === "temperature" ? d3.axisLeft(y).tickFormat(d => `${d}\u00B0C`) : d3.axisLeft(y).tickFormat(d => `${d}%`));
+
+    // Add stats
+    svg.append("text")
+      .attr("x", width / 2)
+      .attr("y", -20)
+      .attr("text-anchor", "middle")
+      .attr("fill", "#f5f5f5")
+      .style("font-size", "14px")
+      .style("font-weight", "bold")
+      .text(() => {
+        const unit = type === "temperature" ? "\u00B0C" : "%";
+        return `MIN: ${stats.min}${unit} | MAX: ${stats.max}${unit} | AVG: ${stats.avg}${unit}`;
+      });
 
     // Create line
     const line = d3.line()
