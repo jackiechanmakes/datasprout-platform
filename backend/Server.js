@@ -17,10 +17,10 @@ app.get('/api/stats', async (req, res) => {
       SELECT 
       MIN(temperature) AS temp_min,
       MAX(temperature) AS temp_max,
-      ROUND(AVG(temperature), 2) AS temp_avg,
+      ROUND(AVG(temperature), 1) AS temp_avg,
       MIN(humidity) AS hum_min,
       MAX(humidity) AS hum_max,
-      ROUND(AVG(humidity), 2) AS hum_avg
+      ROUND(AVG(humidity), 1) AS hum_avg
       FROM sensor_data WHERE timestamp BETWEEN ? AND ?`, [startDate, endDate]);
     conn.release();
     res.json(result[0]);
