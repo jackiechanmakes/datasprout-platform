@@ -34,9 +34,14 @@ function App() {
     }
   }, [startDate, endDate]);
 
+  console.log("data length: ", data.length);
+
   return (
     <div className="dashboard">
-      <h1 className="site-title">Plant Monitor Sensor Data</h1>
+      <div className={`header ${data.length > 0 ? 'with-data' : ''}`}>
+        <img className={`plant-img ${data.length > 0 ? 'small' : 'large'}`} src="/plant2.png" alt="logo"/>
+        <h1 className="site-title">Plant Monitor Sensor Data</h1>
+      </div>
       <DateRangeSelector setStartDate={setStartDate} setEndDate={setEndDate} />
       {data.length > 0 && (
         <>
