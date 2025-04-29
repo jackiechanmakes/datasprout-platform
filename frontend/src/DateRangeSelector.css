@@ -1,0 +1,22 @@
+.label-container {
+    font-size: 2em;
+}
+
+.start-date-label, .end-date-label {
+    padding: 0.5em;
+    margin-bottom: 10px;
+}
+
+.start-date-label input, 
+.end-date-label input {
+    margin-left: 0.75em;
+}
+
+.date-input {
+    font-size: 17px;
+    padding: 10px;
+    height: 20px;
+    width: 135px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}

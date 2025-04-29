@@ -36,34 +36,39 @@ function App() {
 
   return (
     <div className="dashboard">
-      <h1>Sensor Data</h1>
+      <h1 className="site-title">Plant Monitor Sensor Data</h1>
       <DateRangeSelector setStartDate={setStartDate} setEndDate={setEndDate} />
       {data.length > 0 && (
         <>
-        <h2>Temperature</h2>
-        <D3Chart 
-          key={`temperature-${startDate}-${endDate}`} 
-          data={data} 
-          type="temperature" 
-          stats = {{ min: stats_data.temp_min,
-                     max: stats_data.temp_max,
-                     avg: stats_data.temp_avg
-          }} 
-        />
+        <div className="charts-container">
+          <div className="chart">
+            <h2 className="chart-title">Temperature</h2>
+            <D3Chart 
+              key={`temperature-${startDate}-${endDate}`} 
+              data={data} 
+              type="temperature" 
+              stats = {{ min: stats_data.temp_min,
+                        max: stats_data.temp_max,
+                        avg: stats_data.temp_avg
+              }} 
+          />
+        </div>
 
-        <h2>Humidity</h2>
-        <D3Chart 
-          key={`humidity-${startDate}-${endDate}`} 
-          data={data} 
-          type="humidity" 
-          stats = {{ min: stats_data.temp_min,
-            max: stats_data.temp_max,
-            avg: stats_data.temp_avg
-          }} 
-        />
-        </>
-      )}
-      
+        <div className="chart">
+          <h2 className="chart-title">Humidity</h2>
+          <D3Chart 
+            key={`humidity-${startDate}-${endDate}`} 
+            data={data} 
+            type="humidity" 
+            stats = {{ min: stats_data.hum_min,
+              max: stats_data.hum_max,
+              avg: stats_data.hum_avg
+            }} 
+          />
+        </div>
+      </div>
+    </>
+    )}
     </div>
   );
 }

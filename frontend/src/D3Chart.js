@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import * as d3 from 'd3';
-import './ChartStyles.css';
+import './D3Chart.css';
 
 function D3Chart({ data, type, stats }) {
   useEffect(() => {
@@ -90,11 +90,12 @@ function D3Chart({ data, type, stats }) {
       .attr("y", -20)
       .attr("text-anchor", "middle")
       .attr("fill", "#f5f5f5")
-      .style("font-size", "14px")
+      .style("font-size", "16px")
       .style("font-weight", "bold")
       .text(() => {
         const unit = type === "temperature" ? "\u00B0C" : "%";
-        return `MIN: ${stats.min}${unit} | MAX: ${stats.max}${unit} | AVG: ${stats.avg}${unit}`;
+        const nbsp = "\u00A0";
+        return `MIN: ${stats.min}${unit}${nbsp.repeat(3)}|${nbsp.repeat(3)}MAX: ${stats.max}${unit}${nbsp.repeat(3)}|${nbsp.repeat(3)}AVG: ${stats.avg}${unit}`;
       });
 
     // Create line
@@ -121,7 +122,7 @@ function D3Chart({ data, type, stats }) {
       .duration(1000)
       .ease(d3.easeCubic)
       .attr("stroke-dashoffset", 0);
-
+      
     let tooltip = d3.select(".tooltip");
     if (tooltip.empty()) {
         tooltip = d3.select("body").append("div")
