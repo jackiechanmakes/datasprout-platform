@@ -1,7 +1,7 @@
 #chart-temperature, #chart-humidity {
   background-color: #1e1e1e;
   border-radius: 30px;
-  padding: 30px;
+  padding: 40px;
 }
 
 .line {
@@ -38,10 +38,14 @@
     box-shadow: 0 2px 6px rgba(0,0,0,0.15);
   }
 
-  .x-axis text, 
-  .y-axis text {
+  .x-axis text {
     fill: #f5f5f5;
     font-size: 14px;
+  } 
+  
+  .y-axis text {
+    fill: #f5f5f5;
+    font-size: 16px;
   }
   
   .grid .tick line {

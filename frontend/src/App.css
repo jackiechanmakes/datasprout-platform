@@ -74,14 +74,23 @@
 
 .chart-title {
   text-align: center;
-  margin-bottom: 20px;
-  font-size: 1.8em;
+  margin-bottom: 10px;
+  font-size: 2.3em;
+}
+
+.chart-title.temp {
+  color: #03DAC6;
+}
+
+.chart-title.hum {
+  color: #BB86FC;
 }
 
 .site-title {
   text-align: center;
   margin-bottom: 20px;
   font-size: 3.5em;
+  color: #F8B33F;
 }
 
 .header {

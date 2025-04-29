@@ -47,7 +47,7 @@ function App() {
         <>
         <div className="charts-container">
           <div className="chart">
-            <h2 className="chart-title">Temperature</h2>
+            <h2 className="chart-title temp">Temperature</h2>
             <D3Chart 
               key={`temperature-${startDate}-${endDate}`} 
               data={data} 
@@ -60,7 +60,7 @@ function App() {
         </div>
 
         <div className="chart">
-          <h2 className="chart-title">Humidity</h2>
+          <h2 className="chart-title hum">Humidity</h2>
           <D3Chart 
             key={`humidity-${startDate}-${endDate}`} 
             data={data} 

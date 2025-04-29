@@ -5,6 +5,8 @@
 .start-date-label, .end-date-label {
     padding: 0.5em;
     margin-bottom: 10px;
+    color: #CF6779;
+    font-weight: bold;
 }
 
 .start-date-label input, 

@@ -18,7 +18,7 @@ function D3Chart({ data, type, stats }) {
 
   const drawChart = (data, type, stats) => {
     // Set chart dimensions
-    const margin = { top: 50, right: 30, bottom: 60, left: 40 };
+    const margin = { top: 45, right: 30, bottom: 60, left: 60 };
     const width = 800 - margin.left - margin.right;
     const height = 400 - margin.top - margin.bottom;
     const chartId = `chart-${type}`;
@@ -109,7 +109,7 @@ function D3Chart({ data, type, stats }) {
       .datum(chartData)
       .attr("class", "line")
       .attr("d", line)
-      .attr("stroke", type === "temperature" ? "red" : "blue")
+      .attr("stroke", type === "temperature" ? "#03DAC6" : "#BB86FC")
       .attr("fill", "none")
       .attr("stroke-dasharray", function() {
         const totalLength = this.getTotalLength();
@@ -138,10 +138,10 @@ function D3Chart({ data, type, stats }) {
       .attr("cx", d => x(d.time))
       .attr("cy", d => y(d[type]))
       .attr("r", 4)
-      .attr("fill", type === "temperature" ? "red" : "blue")
+      .attr("fill", type === "temperature" ? "#03DAC6" : "#BB86FC")
       .on("mouseover", (event, d) => {
         tooltip.transition().duration(200).style("opacity", .9);
-        tooltip.html(`${d3.utcFormat("%m-%d-%Y, %H:%M")(d.time)}<br/>${type}: ${d[type]}${type === "temperature" ? "\u00B0C" : "%"}`)
+        tooltip.html(`${d3.utcFormat("%m-%d-%Y, %H:%M")(d.time)}<br/>${String(type).charAt(0).toUpperCase() + String(type).slice(1)}: ${d[type]}${type === "temperature" ? "\u00B0C" : "%"}`)
           .style("left", (event.pageX + 10) + "px")
           .style("top", (event.pageY - 28) + "px");
       })
@@ -157,8 +157,8 @@ function D3Chart({ data, type, stats }) {
     .attr("x2", 0).attr("y2", y.range()[1])
     .selectAll("stop")
     .data([
-      { offset: "0%", color: type === "temperature" ? "red" : "blue", opacity: 0.1 },
-      { offset: "100%", color: type === "temperature" ? "red" : "blue", opacity: 0 }
+      { offset: "0%", color: type === "temperature" ? "#03DAC6" : "#BB86FC", opacity: 0.1 },
+      { offset: "100%", color: type === "temperature" ? "#03DAC6" : "#BB86FC", opacity: 0 }
     ])
     .enter().append("stop")
     .attr("offset", d => d.offset)
