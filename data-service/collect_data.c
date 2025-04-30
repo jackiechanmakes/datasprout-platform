@@ -1,3 +1,10 @@
+/*********************************************************
+ * File name: collect_data.c
+ * Description: This program reads temperature and humidity data from a DHT11 sensor, 
+ *              displays data on a 16x2 I2C-connected LCD screen panel, and stores the
+ *              data in a MariaDB database every 30 minutes.  
+**********************************************************/
+
 #include <wiringPi.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,7 +36,7 @@ void write_word(int data){
 
 void send_command(int comm){
 	int buf;
-	// Send bit7-4 firstly
+	// Send bit7-4
 	buf = comm & 0xF0;
 	buf |= 0x04;			// RS = 0, RW = 0, EN = 1
 	write_word(buf);
@@ -37,7 +44,7 @@ void send_command(int comm){
 	buf &= 0xFB;			// Make EN = 0
 	write_word(buf);
 
-	// Send bit3-0 secondly
+	// Send bit3-0
 	buf = (comm & 0x0F) << 4;
 	buf |= 0x04;			// RS = 0, RW = 0, EN = 1
 	write_word(buf);
@@ -48,38 +55,38 @@ void send_command(int comm){
 
 void send_data(int data){
 	int buf;
-	// Send bit7-4 firstly
+	// Send bit7-4
 	buf = data & 0xF0;
 	buf |= 0x05;			// RS = 1, RW = 0, EN = 1
 	write_word(buf);
 	delay(2);
-	buf &= 0xFB;			// Make EN = 0
+	buf &= 0xFB;			// EN = 0
 	write_word(buf);
 
-	// Send bit3-0 secondly
+	// Send bit3-0
 	buf = (data & 0x0F) << 4;
 	buf |= 0x05;			// RS = 1, RW = 0, EN = 1
 	write_word(buf);
 	delay(2);
-	buf &= 0xFB;			// Make EN = 0
+	buf &= 0xFB;			// EN = 0
 	write_word(buf);
 }
 
 void init(){
-	send_command(0x33);	// Must initialize to 8-line mode at first
+	send_command(0x33);	// Initialize 8-line mode
 	delay(5);
-	send_command(0x32);	// Then initialize to 4-line mode
+	send_command(0x32);	// Initialize to 4-line mode
 	delay(5);
 	send_command(0x28);	// 2 Lines & 5*7 dots
 	delay(5);
 	send_command(0x0C);	// Enable display without cursor
 	delay(5);
-	send_command(0x01);	// Clear Screen
+	send_command(0x01);	// Clear screen
 	wiringPiI2CWrite(fd, 0x08);
 }
 
 void clear(){
-	send_command(0x01);	//clear Screen
+	send_command(0x01);	// Clear screen
 }
 
 void write(int x, int y, char data[]){
@@ -108,7 +115,7 @@ void writeLCD(char* data){
 	// clear();
 }
 
-// Humdifier 
+// Humidifier 
 int dht11_dat[5] = { 0, 0, 0, 0, 0 };
 
 void read_dht11_dat()
@@ -161,8 +168,8 @@ void read_dht11_dat()
             char time_data[6];
 
             // Humidifier and Temp data
-            sprintf(humidifier_data, "%d.%d",  dht11_dat[0], dht11_dat[1]);
-            sprintf(temperature_data, "%d.%d",  dht11_dat[2], dht11_dat[3]);
+            sprintf(humidifier_data, "%d.%d", dht11_dat[0], dht11_dat[1]);
+            sprintf(temperature_data, "%d.%d", dht11_dat[2], dht11_dat[3]);
             strcat(lcd_data, humidifier_data);
             strcat(lcd_data, " ");
             strcat(lcd_data, temperature_data);
@@ -177,8 +184,8 @@ void read_dht11_dat()
             strcat(lcd_data, time_data);
 
             writeLCD(lcd_data);
-
             insert_db();
+
             // Print to console
             printf( "Humidity = %d.%d %% Temperature = %d.%d C (%.1f F) Time = %s\n",
                     dht11_dat[0], dht11_dat[1], dht11_dat[2], dht11_dat[3], f, time_data);
@@ -204,7 +211,7 @@ void connect_db() {
     char *database = "studentdb";
 
     conn = mysql_init(NULL);
-    /* Connect to database */
+    // Connect to database
     if (!mysql_real_connect(conn, server, user, password, database, 0, NULL, 0))
     {
         fprintf(stderr, "%s\n", mysql_error(conn));
@@ -213,7 +220,7 @@ void connect_db() {
 }
 
 void disconnect_db() {
-    /* Close connection */
+    // Close connection
     mysql_free_result(res);
     mysql_close(conn);
 }
@@ -222,7 +229,7 @@ void insert_db() {
     char sqlInsertStatement[100];
     sprintf(sqlInsertStatement, "INSERT INTO sensor_data (humidity, temperature, timestamp) VALUES (%d.%d, %d.%d, NOW())", dht11_dat[0], dht11_dat[1], dht11_dat[2], dht11_dat[3]);
 
-    /* Send SQL insert query */
+    // Send SQL insert query
     if ( mysql_query(conn, sqlInsertStatement))
     {
         fprintf(stderr, "%s\n", mysql_error(conn));

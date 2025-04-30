@@ -1,11 +1,15 @@
+/*********************************************************
+ * File name: fetch_data.c
+ * Description: This program fetches temperature and humidity data stored in a 
+ *              MariaDB database between a given start date and end date.  
+**********************************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
 #include <time.h>
-
 #include <mysql/mysql.h>
-#include <stdio.h>
 
 MYSQL *conn;
 MYSQL_RES *res;
@@ -18,7 +22,7 @@ void connect_db() {
     char *database = "studentdb";
 
     conn = mysql_init(NULL);
-    /* Connect to database */
+    // Connect to database
     if (!mysql_real_connect(conn, server, user, password, database, 0, NULL, 0))
     {
         fprintf(stderr, "%s\n", mysql_error(conn));
@@ -27,14 +31,13 @@ void connect_db() {
 }
 
 void disconnect_db() {
-    /* Close connection */
+    // Close connection 
     mysql_free_result(res);
     mysql_close(conn);
 }
 
 void fetch_data(char* startDate, char *endDate) {
-    /* Send SQL select query */
-
+    // Send SQL select query
     char queryStr[200] = "select temperature, humidity, timestamp from sensor_data WHERE `timestamp` BETWEEN '";
     strcat(queryStr, startDate);
     strcat(queryStr, " 00:00:00' AND '");
