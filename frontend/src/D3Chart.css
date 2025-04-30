@@ -28,21 +28,21 @@
   
   .tooltip {
     position: absolute;
-    background: #111;
-    border: 1px solid #ddd;
-    color: #ddd;
+    background: #fff;
+    border: 1px solid #111;
+    color: #111;
     padding: 6px 10px;
     font-size: 12px;
     pointer-events: none;
     border-radius: 4px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    /* box-shadow: 0 2px 6px rgba(0,0,0,0.15); */
   }
 
   .x-axis text {
     fill: #f5f5f5;
     font-size: 14px;
   } 
-  
+
   .y-axis text {
     fill: #f5f5f5;
     font-size: 16px;
