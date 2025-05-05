@@ -38,7 +38,7 @@ Fetches raw sensor data (temperature, humidity, and timestamp) for a given date 
 ]
 ```
 
-### ```/api/data```  
+### ```/api/stats```  
 Fetches statistical data (minimum, maximum, and average) for temperature and humidity within a given date range.
 
 **Query Parameters**:
