@@ -4,7 +4,7 @@
 
 At its core, DataSprout integrates a **Raspberry Pi 5** with a **DHT11 temperature/humidity sensor** and a **16x2 I2C LCD panel** for local display. A web-based dashboard powered by modern JavaScript frameworks presents the data in real-time while a custom backend handles data flow and persistence. **Shell scripts** are included to automate environment setup, app lifecycle management, and data collection.
 
-### Features
+### 🌱 Features
 
 * **Real-Time Data Collection**: Polls temperature and humidity data from a DHT11 sensor using GPIO via C programming language.
 * **LCD Display Output**: Displays current readings on a 16x2 I2C LCD panel for on-device monitoring.
