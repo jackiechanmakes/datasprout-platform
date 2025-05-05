@@ -14,7 +14,7 @@ This is the frontend for the **DataSprout** IoT environmental monitoring system 
 * CSS
 
 ### Repository Structure
-`
+```
 frontend/
 ├── public/                                 # Static files
 │	 └── index.html
@@ -33,4 +33,4 @@ frontend/
 │    ├── App.css                            # App-wide styles
 │    ├── index.js                           # React entry point
 │    ├── index.css                          # Global styles
-`
+```
