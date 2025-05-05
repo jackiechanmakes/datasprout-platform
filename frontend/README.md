@@ -1,4 +1,4 @@
-# Frontend - DataSprout
+# 🌱 Frontend - DataSprout
 
 This is the frontend for the **DataSprout** IoT environmental monitoring system built with **React** and **D3.js** for dynamic, real-time data visualization and interactive charts. This app communicates with the backend through RESTful API endpoints to display sensor data on an interactive web dashboard.
 
@@ -14,7 +14,7 @@ This is the frontend for the **DataSprout** IoT environmental monitoring system 
 * CSS
 
 ### Repository Structure
-
+`
 frontend/
 ├── public/                                 # Static files
 │	 └── index.html
@@ -33,3 +33,4 @@ frontend/
 │    ├── App.css                            # App-wide styles
 │    ├── index.js                           # React entry point
 │    ├── index.css                          # Global styles
+`
