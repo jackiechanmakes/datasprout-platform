@@ -22,13 +22,13 @@ frontend/
 ├── src/                                    # Source code
 │    ├── components/                        # React components
 │    │   ├── D3Chart/                       # D3.js chart component
-│	 │   │   └── D3Chart.js
-│	 │   │   └── D3Chart.css
+|    │   │   └── D3Chart.js
+|    │   │   └── D3Chart.css
 │    │   ├── DateRangeSelector/             # Date range picker component
-│	 │   │   └── DateRangeSelector.js
-│	 │   │   └── DateRangeSelector.css
+|    │   │   └── DateRangeSelector.js
+│    │   │   └── DateRangeSelector.css
 │    │   ├── themes/                        # Theme styles
-│	 │   │   └── DarkTheme.css
+│    │   │   └── DarkTheme.css
 │    ├── App.js                             # Main app component
 │    ├── App.css                            # App-wide styles
 │    ├── index.js                           # React entry point
