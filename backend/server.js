@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { exec } = require('child_process');
-const db = require('./Database');
+const db = require('./database');
 const { start } = require('repl');
 const app = express();
 const port = 8080;

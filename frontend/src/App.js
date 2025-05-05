@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import DateRangeSelector from './DateRangeSelector';
-import D3Chart from './D3Chart';
-import './DarkTheme.css'
+import DateRangeSelector from './components/DateRangeSelector/DateRangeSelector';
+import D3Chart from './components/D3Chart/D3Chart';
+import './themes/DarkTheme.css'
 import './App.css'
 
 function App() {

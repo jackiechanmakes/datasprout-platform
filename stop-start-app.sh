@@ -23,7 +23,7 @@ echo "Frontend and backend processes have been stopped and removed from PM2."
 echo "Starting backend..."
 cd backend/
 # node server.js &
-pm2 start Server.js --name "plant-proj-backend"
+pm2 start server.js --name "plant-proj-backend"
 
 sleep 2
 
