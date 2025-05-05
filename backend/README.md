@@ -1,15 +1,15 @@
 # 🌱 Backend - DataSprout
 
-This is the backend for the **DataSprout** IoT environmental monitoring system that collects, stores, and serves temperature and humidity data from sensors. It is built using **Node.js** and **Express.js** with data stored in a **MariaDB** database. The backend exposes **RESTful APIs** for fetching real-time and historical data. 
+This is the backend for the **DataSprout** IoT environmental monitoring system which collects, stores, and serves temperature and humidity data from sensors. It is built using **Node.js** and **Express.js** with data stored in a **MariaDB** database. The backend exposes **RESTful APIs** for fetching real-time and historical data. 
 
 ### 🗄️ General Folder Structure
 ```
 backend/
-├── database.js                                   # Database connection
-├── server.js                                     # Main express server
-├── package.json                                  # NPM dependencies and scripts
-├── node_modules/                                 # NPM packages
-
+├── database.js                    # Database connection
+├── server.js                      # Main express server
+├── package.json                   # NPM dependencies and scripts
+├── node_modules/                  # NPM packages
+```
 ### 📝 API Endpoints
 
 ```/api/data```
