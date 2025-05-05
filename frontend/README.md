@@ -8,11 +8,6 @@ This is the frontend for the **DataSprout** IoT environmental monitoring system 
 * **Date range selection** with date picker UI to filter data for custom visualizations.
 * **Dark theme** for a modern user interface.
 
-### 🛠️ Tech Stack
-* React
-* D3.js
-* CSS
-
 ### 🗄️ General Folder Structure
 ```
 frontend/
