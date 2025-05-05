@@ -27,7 +27,7 @@ frontend/
 │    │   ├── DateRangeSelector/             # Date range picker component
 |    │   │   └── DateRangeSelector.js
 │    │   │   └── DateRangeSelector.css
-│    ├── themes/                        # Theme styles
+│    ├── themes/                            # Theme styles
 │    │   └── DarkTheme.css
 │    ├── App.js                             # Main app component
 │    ├── App.css                            # App-wide styles
