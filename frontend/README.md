@@ -13,7 +13,7 @@ This is the frontend for the **DataSprout** IoT environmental monitoring system 
 * D3.js
 * CSS
 
-### Repository Structure
+### 🗄️ General Folder Structure
 ```
 frontend/
 ├── public/                                 # Static files
