@@ -12,8 +12,8 @@ backend/
 ```
 ### 📝 API Endpoints
 
-```/api/data```
-Fetches raw sensor data (temperature, humidity, and timestamp) for a given date range.
+1. ```/api/data```
+* Fetches raw sensor data (temperature, humidity, and timestamp) for a given date range.
 
 **Query Parameters**:
 * ```startDate``` (required): The start date in ```YYYY-MM-DD``` format.
@@ -38,8 +38,8 @@ Fetches raw sensor data (temperature, humidity, and timestamp) for a given date 
 ]
 ```
 
-```/api/data```
-Fetches statistical data (minimum, maximum, and average) for temperature and humidity within a given date range.
+2. ```/api/data```
+* Fetches statistical data (minimum, maximum, and average) for temperature and humidity within a given date range.
 
 **Query Parameters**:
 * ```startDate``` (required): The start date in ```YYYY-MM-DD``` format.
