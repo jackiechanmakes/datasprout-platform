@@ -19,7 +19,7 @@ Fetches raw sensor data (temperature, humidity, and timestamp) for a given date 
 * ```startDate``` (required): The start date in ```YYYY-MM-DD``` format.
 * ```endDate``` (required): The end date in ```YYYY-MM-DD``` format. 
 
-**Example Request:**
+**Example Request:**  
 ```GET http://localhost:8080/api/data?startDate=2025-04-28&endDate=2025-04-30```
 
 **Example Response:**
@@ -45,7 +45,7 @@ Fetches statistical data (minimum, maximum, and average) for temperature and hum
 * ```startDate``` (required): The start date in ```YYYY-MM-DD``` format.
 * ```endDate``` (required): The end date in ```YYYY-MM-DD``` format. 
 
-**Example Request:**
+**Example Request:**  
 ```GET http://localhost:8080/api/stats?startDate=2025-04-28&endDate=2025-04-30```
 
 **Example Response:**
