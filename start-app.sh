@@ -4,7 +4,7 @@
 echo "Starting backend..."
 cd backend/
 # node server.js &
-pm2 start server.js --name "plant-proj-backend"
+pm2 start server.js --name "datasprout-backend"
 
 sleep 2
 
@@ -13,6 +13,6 @@ echo "Starting frontend..."
 cd ../frontend
 # npm start &
 npm run build 
-pm2 serve build --name "plant-proj-frontend" --port 3000
+pm2 serve build --name "datasprout-frontend" --port 3000
 
 
